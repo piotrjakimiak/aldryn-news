@@ -30,16 +30,7 @@ class ArchiveView(BaseNewsView, ArchiveIndexView):
     allow_future = True
     template_name = 'aldryn_news/news_list.html'
     date_list_period = 'month'
-
-    @property
-    def uses_datetime_field(self):
-        """Return False.
-
-        This is a nasty, nasty workaround for a problem where HVAD doesn't
-        provide the date field on the translated model, which is the one
-        being queried. Elsewhere, HVAD patches the code to do the right thing
-        but not here."""
-        return False
+    model = News
 
     def get_queryset(self):
         qs = super(ArchiveView, self).get_queryset()

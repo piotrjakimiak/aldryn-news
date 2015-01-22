@@ -47,6 +47,7 @@ class ArchiveView(BaseNewsView, ArchiveIndexView):
         if kwargs['year']:
             kwargs['archive_date'] = datetime.date(kwargs['year'], kwargs['month'] or 1, 1)
         kwargs['page'] = DiggPaginator(kwargs['object_list'], paginate_by(), body=6, padding=2).page(page)
+        kwargs['object_list'] = kwargs['page'].object_list
         return super(ArchiveView, self).get_context_data(**kwargs)
 
 

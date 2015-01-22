@@ -7,6 +7,7 @@ from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
+from aldryn_common.paginator import DiggPaginator, paginate_by
 from aldryn_news import request_news_identifier
 from aldryn_news.models import News, Category, Tag
 
@@ -45,6 +46,7 @@ class ArchiveView(BaseNewsView, ArchiveIndexView):
         kwargs['year'] = int(self.kwargs.get('year')) if 'year' in self.kwargs else None
         if kwargs['year']:
             kwargs['archive_date'] = datetime.date(kwargs['year'], kwargs['month'] or 1, 1)
+        kwargs['page'] = DiggPaginator(kwargs['object_list'], paginate_by(), body=6, padding=2).page(page)
         return super(ArchiveView, self).get_context_data(**kwargs)
 
 
